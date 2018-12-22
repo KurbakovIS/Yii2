@@ -23,7 +23,7 @@ class Task extends Model
     {
         return [
             [['id', 'name', 'content', 'condition'], 'required'],
-            ['name',TaskValidator::createValidator()]
+            ['name',TaskValidator::class]
         ];
     }
 
