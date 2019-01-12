@@ -3,6 +3,8 @@
 namespace app\models\tables;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "user".
@@ -17,6 +19,23 @@ use Yii;
 class Users extends \yii\db\ActiveRecord
 {
     const SCENARIO_AUTH = 'auth';
+
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => 'update_time',
+//                'value' => new Expression('NOW()'),
+                'value' => function () {
+                    return date('Y-m-d H:i:s');
+                }
+            ]
+
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -74,5 +93,15 @@ class Users extends \yii\db\ActiveRecord
             ];
         }
         return parent::fields();
+    }
+
+    public static function getUsersList()
+    {
+        $users = static::find()
+            ->select(['id', 'login'])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($users, 'id', 'login');
     }
 }

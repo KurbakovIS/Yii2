@@ -6,17 +6,6 @@ $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
-    <?php
-    echo \app\widgets\TaskWidget::widget()
-    //    $dataProvider = new \yii\data\ActiveDataProvider([
-    //            'query'=>'',
-    //    ])
-    ?>
+<h1>Главная</h1>
 
-
-    <!--    --><?php //\yii\widgets\ListView::widget([
-    //            'dataProvider' =>$dataProvider,
-    //            'itemView'=>'task'
-    //    ]);
-    //    ?>
 </div>

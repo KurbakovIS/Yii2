@@ -12,10 +12,7 @@ use yii\widgets\ActiveForm;
 <div class="users-form">
 
     <?php $form = ActiveForm::begin();
-    $role = $model::find()->select('roles.*')->joinWith('role')
-        ->asArray()
-        ->all();
-    $items = \yii\helpers\ArrayHelper::map($role,'id','name');
+
     $params = [
         'prompt' => 'Укажите роль пользователя'
     ];
@@ -29,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'role_id')->dropDownList($items,$params) ?>
+    <?= $form->field($model, 'role_id')->dropDownList($userRoleList,$params) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

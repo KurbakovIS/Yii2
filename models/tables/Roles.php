@@ -2,7 +2,9 @@
 
 namespace app\models\tables;
 
+use app\models\User;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "roles".
@@ -49,5 +51,14 @@ class Roles extends \yii\db\ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::className(), ['role_id' => 'id']);
+    }
+
+    public static function getRoleList()
+    {
+        $userRole = static::find()
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($userRole, 'id', 'name');
     }
 }

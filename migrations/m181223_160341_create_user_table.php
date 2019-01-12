@@ -17,7 +17,8 @@ class m181223_160341_create_user_table extends Migration
             'name' => $this->string()->notNull(),
             'date' => $this->dateTime()->notNull(),
             'description' => $this->text(),
-            'responsible_id' => $this->integer()
+            'responsible_id' => $this->integer(),
+
         ]);
         $this->createIndex('ix_task','tasks','responsible_id');
     }

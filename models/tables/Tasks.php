@@ -2,7 +2,10 @@
 
 namespace app\models\tables;
 
+use app\behaviors\MyBehavior;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "tasks".
@@ -17,6 +20,24 @@ use Yii;
  */
 class Tasks extends \yii\db\ActiveRecord
 {
+    const EVENT_RUN_COMPLETE = 'run complete';
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => 'update_time',
+//                'value' => new Expression('NOW()'),
+                'value' => function () {
+                    return date('Y-m-d H:i:s');
+                }
+            ]
+
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -56,8 +77,13 @@ class Tasks extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getResponsible()
     {
         return $this->hasOne(Users::class, ['id' => 'responsible_id']);
+    }
+
+    public function getTask()
+    {
+        $this->trigger(static::EVENT_RUN_COMPLETE);
     }
 }

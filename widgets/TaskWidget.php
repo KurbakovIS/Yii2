@@ -15,13 +15,14 @@ use yii\base\Widget;
 
 class TaskWidget extends Widget
 {
-    public $names = '';
+    public $model;
 
     public function run()
     {
-        $tasks = Tasks::find()->all();
-        $users = Users::find()->all();
-        return $this->render('task', ['tasks' => $tasks, 'users' => $users]);
+        if (is_a($this->model, Tasks::class)) {
+            return $this->render('task', ['model' => $this->model]);
+        }
+        throw new \Exception('Невозможно отобразить модель');
     }
 
 }

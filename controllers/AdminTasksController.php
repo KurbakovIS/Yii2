@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\tables\Users;
+use app\widgets\Alert;
 use Yii;
 use app\models\tables\Tasks;
 use app\models\filters\TasksSearch;
@@ -66,12 +68,18 @@ class AdminTasksController extends Controller
     {
         $model = new Tasks();
 
+        $model->on(Tasks::EVENT_RUN_COMPLETE,  function (){
+//            echo 'Все прошло удачно';
+        });
+         $model->behaviors();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->getTask();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'usersList' => Users::getUsersList()
         ]);
     }
 
