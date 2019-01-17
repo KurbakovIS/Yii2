@@ -5,6 +5,7 @@ p, h3 {
 .taskConteiner{
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 .task {
     max-width: 250px;
@@ -23,5 +24,6 @@ p, h3 {
 
 .content-task {
     background-color: white;
-    padding-left: 2px;
+    padding: 15px;
+    max-width: 250px;
 }

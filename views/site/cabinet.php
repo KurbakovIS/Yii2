@@ -1,11 +1,5 @@
-<?php
+<h1>Cabinet</h1>
 
-use yii\helpers\Url;
-
-?>
-<div style="margin-left: 25px">
-    <a class="btn btn-success" href="<?= Url::to(['task/create']) ?>">Создать новую задачу</a>
-</div>
 <?
 $model = \app\models\tables\Tasks::findOne(1);
 
@@ -26,5 +20,3 @@ echo
 ]);
 
 ?>
-
-

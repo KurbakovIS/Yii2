@@ -82,8 +82,10 @@ class Tasks extends \yii\db\ActiveRecord
         return $this->hasOne(Users::class, ['id' => 'responsible_id']);
     }
 
-    public function getTask()
+    public function filterTasks()
     {
-        $this->trigger(static::EVENT_RUN_COMPLETE);
+
     }
+
+
 }

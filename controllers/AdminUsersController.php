@@ -72,8 +72,6 @@ class AdminUsersController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-
-
         return $this->render('create', [
             'model' => $model,
             'userRoleList' => Roles::getRoleList(),
@@ -97,6 +95,7 @@ class AdminUsersController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'userRoleList' => Roles::getRoleList(),
         ]);
     }
 

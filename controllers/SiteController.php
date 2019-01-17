@@ -2,8 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\tables\Tasks;
 use Yii;
+use yii\caching\DbDependency;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\filters\PageCache;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -18,12 +22,16 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
+            'cache'=>[
+              'class'=>PageCache::class,
+              'only'=>['contact']
+            ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout', 'cabinet'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'cabinet'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -124,5 +132,26 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionCabinet()
+    {
+        $cache = Yii::$app->cache;
+
+        $key = 'task_';
+
+        $dependency = new DbDependency();
+        $dependency->sql = "SELECT COUNT(*) FROM tasks";
+
+        if (!$task = $cache->get($key)) {
+            $cache->set($key, $task, 200, $dependency);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Tasks::find()->where(['responsible_id' => Yii::$app->user->identity->getId()])
+        ]);
+        return $this->render('cabinet', [
+            'dataProvider' => $dataProvider
+        ]);
     }
 }

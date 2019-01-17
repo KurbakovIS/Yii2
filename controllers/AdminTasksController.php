@@ -68,12 +68,9 @@ class AdminTasksController extends Controller
     {
         $model = new Tasks();
 
-        $model->on(Tasks::EVENT_RUN_COMPLETE,  function (){
-//            echo 'Все прошло удачно';
-        });
-         $model->behaviors();
+
+        $model->behaviors();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->getTask();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -100,6 +97,7 @@ class AdminTasksController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'usersList' => Users::getUsersList()
         ]);
     }
 

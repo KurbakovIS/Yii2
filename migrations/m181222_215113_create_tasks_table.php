@@ -17,6 +17,7 @@ class m181222_215113_create_tasks_table extends Migration
             'login'=>$this->string(222)->notNull(),
             'password'=>$this->string(222)->notNull(),
             'name'=>$this->string(222),
+            'email'=>$this->string(222),
         ]);
         $this->createIndex('ix_login','user','login',true);
         $this->addForeignKey(

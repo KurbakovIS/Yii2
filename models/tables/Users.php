@@ -68,6 +68,8 @@ class Users extends \yii\db\ActiveRecord
             'login' => 'Login',
             'password' => 'Password',
             'name' => 'Name',
+            'email' => 'Email',
+            'role_id' => 'Role_id',
         ];
     }
 
