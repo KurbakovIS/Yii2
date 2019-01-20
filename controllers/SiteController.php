@@ -22,9 +22,9 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'cache'=>[
-              'class'=>PageCache::class,
-              'only'=>['contact']
+            'cache' => [
+                'class' => PageCache::class,
+                'only' => ['contact']
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -136,22 +136,28 @@ class SiteController extends Controller
 
     public function actionCabinet()
     {
-        $cache = Yii::$app->cache;
-
-        $key = 'task_';
+        $userId = Yii::$app->user->identity->getId();
 
         $dependency = new DbDependency();
         $dependency->sql = "SELECT COUNT(*) FROM tasks";
 
-        if (!$task = $cache->get($key)) {
-            $cache->set($key, $task, 200, $dependency);
-        }
-
         $dataProvider = new ActiveDataProvider([
-            'query' => Tasks::find()->where(['responsible_id' => Yii::$app->user->identity->getId()])
+            'query' => Tasks::find()->where(['responsible_id' => $userId])
         ]);
+
+        Yii::$app->db->cache(function () use ($dataProvider) {
+            return $dataProvider->prepare();
+        });
+
         return $this->render('cabinet', [
             'dataProvider' => $dataProvider
         ]);
+    }
+
+    public function actionLang($lang)
+    {
+        $session = Yii::$app->session;
+        $session->set('lang', $lang);
+        $this->redirect(Yii::$app->request->referrer);
     }
 }

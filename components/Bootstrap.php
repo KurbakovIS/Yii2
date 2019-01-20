@@ -23,9 +23,19 @@ class Bootstrap extends Component implements BootstrapInterface
      * Bootstrap method to be called during application bootstrap stage.
      * @param Application $app the application currently running
      */
+    /** @var Application */
+    protected $app;
+
     public function bootstrap($app)
     {
-        $this->attachEventsHandlers();
+        $this->app = $app;
+        $this->setLang();
+//        $this->attachEventsHandlers();
+    }
+
+    protected function setLang()
+    {
+        $this->app->language = $this->app->session->get('lang');
     }
 
     protected function attachEventsHandlers()

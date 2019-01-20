@@ -67,7 +67,7 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Имя',
+            'name' => Yii::t('main','task_name'),
             'date' => 'Date',
             'description' => 'Description',
             'responsible_id' => 'Responsible ID',
@@ -82,9 +82,19 @@ class Tasks extends \yii\db\ActiveRecord
         return $this->hasOne(Users::class, ['id' => 'responsible_id']);
     }
 
-    public function filterTasks()
+    public function getTaskComments()
     {
+        return $this->hasMany(TaskComments::class, ['task_id' => 'id']);
+    }
+    public function getTaskAttachments()
+    {
+        return $this->hasMany(TaskAttachments::class, ['task_id' => 'id']);
+    }
 
+
+    public function getStatus()
+    {
+        return $this->hasOne(TaskStatus::class, ['id' => 'status']);
     }
 
 
