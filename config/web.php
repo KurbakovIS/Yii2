@@ -13,6 +13,11 @@ $config = [
         '@npm' => '@vendor/npm-asset',
         '@img' => '@app/web/img'
     ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
+    ],
     'components' => [
         'i18n' => [
             'translations' => [
@@ -56,14 +61,16 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+//            'enableStrictParsing'=>true,
             'rules' => [
+                'task-edit/<id>' => 'task/one'
             ],
         ],
-        */
+
     ],
     'params' => $params,
 ];
