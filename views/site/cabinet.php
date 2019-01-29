@@ -2,6 +2,7 @@
 
 <?
 $model = \app\models\tables\Tasks::findOne(1);
+\app\assets\CalendarAsset::register($this);
 
 echo
 

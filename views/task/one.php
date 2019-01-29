@@ -5,6 +5,7 @@ use \yii\helpers\Url;
 use \yii\helpers\Html;
 
 //var_dump($model->taskComments);
+\app\assets\CalendarAsset::register($this);
 ?>
 
 <div class="taskCustom">
@@ -40,15 +41,15 @@ use \yii\helpers\Html;
             'options' => ['class' => "form-inline"]
         ]);
         ?>
-        <?=$form->field($taskAttachmentForm, 'taskId')->hiddenInput(['value' => $model->id])->label(false);?>
-        <?=$form->field($taskAttachmentForm,'file')->fileInput();?>
-        <?=Html::submitButton("Добавить",['class'=>'btn btn-default']);?>
+        <?= $form->field($taskAttachmentForm, 'taskId')->hiddenInput(['value' => $model->id])->label(false); ?>
+        <?= $form->field($taskAttachmentForm, 'file')->fileInput(); ?>
+        <?= Html::submitButton("Добавить", ['class' => 'btn btn-default']); ?>
         <? ActiveForm::end() ?>
         <hr>
         <div class="attachmentsHistory">
             <? foreach ($model->taskAttachments as $file): ?>
-                <a href="/img/tasks/<?$file->path?>">
-                    <img src="/img/tasks/small/<?$file->path?>" alt="">
+                <a href="/img/tasks/<? $file->path ?>">
+                    <img src="/img/tasks/small/<? $file->path ?>" alt="">
                 </a>
             <? endforeach; ?>
         </div>

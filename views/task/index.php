@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-
+\app\assets\CalendarAsset::register($this);
 ?>
 <div style="margin-left: 25px; display: flex;align-items: center;">
     <a class="btn btn-success"  style="margin-right: 10px" href="<?= Url::to(['task/create']) ?>">Создать новую задачу</a>
